@@ -1,0 +1,14 @@
+.selectors {
+
+    ul.nth-odd {
+        li:nth-child(odd) {
+            background-color: tomato;
+        }
+    }
+
+    ul.nth-even {
+        li:nth-child(even) {
+            background-color: tomato;
+        }
+    }
+}
