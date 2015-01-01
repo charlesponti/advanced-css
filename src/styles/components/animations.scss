@@ -1,0 +1,47 @@
+// This file contains the CSS rules to the .animations component
+
+.transform {
+    width: 100%;
+
+    .outerbox {
+        height: 400px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: aliceblue;
+    }
+
+    .innerbox {
+        height: 50%;
+        width: 30%;
+        background-color: tomato;
+        transform: rotate(30deg);
+    }
+
+}
+
+.transition {
+    width: 100%;
+
+    .outerbox {
+        height: 400px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: aliceblue;
+    }
+
+    .innerbox {
+        height: 50%;
+        width: 30%;
+        margin-left: 0;
+        background-color: tomato;
+        transition: all 1s ease-in-out;
+        &:hover {
+            transform: rotate(180deg);
+            background-color: blue;
+            margin-left: 200px;
+            width: 50%;
+            height: 80%;
+        }
+    }
+
+}

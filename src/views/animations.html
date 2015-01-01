@@ -1,0 +1,73 @@
+<h1 class="text-center"> Animations </h1>
+
+<div class="transform">
+    <h2 class="text-center"> Transform </h2>
+
+    <div class="outerbox">
+        <div class="innerbox"></div>
+    </div>
+    <br/>
+    <pre class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <code>
+            .transform {
+                width: 100%;
+
+                .outerbox {
+                    height: 400px;
+                    width: 80%;
+                    margin: 0 auto;
+                    background-color: aliceblue;
+                }
+
+                .innerbox {
+                    height: 50%;
+                    width: 30%;
+                    background-color: tomato;
+                    transform: rotate(30deg);
+                }
+
+            }
+        </code>
+    </pre>
+
+</div>
+
+<div class="transition">
+    <h2 class="text-center"> Transition</h2>
+
+    <div class="outerbox">
+        <div class="innerbox"></div>
+    </div>
+    <br/>
+    <pre class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <code class="language-scss">
+            .transition {
+                width: 100%;
+
+                .outerbox {
+                    height: 400px;
+                    width: 80%;
+                    margin: 0 auto;
+                    background-color: aliceblue;
+                }
+
+                .innerbox {
+                    height: 50%;
+                    width: 30%;
+                    margin-left: 0;
+                    background-color: tomato;
+                    transition: all 1s ease-in-out;
+                    &:hover {
+                        transform: rotate(180deg);
+                        background-color: blue;
+                        margin-left: 200px;
+                        width: 50%;
+                        height: 80%;
+                    }
+                }
+
+            }
+        </code>
+    </pre>
+
+</div>
