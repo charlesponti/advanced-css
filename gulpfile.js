@@ -4,6 +4,7 @@ var gulp = require('gulp');
 var karma = require('karma');
 var stylish = require('jshint-stylish');
 var minifyHTML = require('gulp-minify-html');
+var runSequence = require('run-sequence');
 
 // Gulp Plugins
 var gutil = require('gulp-util');
@@ -132,12 +133,7 @@ gulp.task('server', function() {
   });
 });
 
-gulp.task('build', ['build-styles', 'build-scripts', 'build-html']);
-
-gulp.task('prod-build', ['build-scripts-prod','build-styles-prod']);
-
-gulp.task('default', [ 'build', 'server' ], function() {
-
+gulp.task('watch', function() {
   watch({ glob: files.styles.source }, function() {
     return gulp.start('build-styles');
   });
@@ -146,8 +142,19 @@ gulp.task('default', [ 'build', 'server' ], function() {
     return gulp.start('build-html');
   });
 
-  return watch({ glob: files.scripts.source }, function() {
+  watch({ glob: files.scripts.source }, function() {
     return gulp.start('build-scripts');
   });
+});
 
+gulp.task('build', function() {
+  return runSequence('build-styles', 'build-scripts', 'build-html');
+});
+
+gulp.task('prod-build', function() {
+  return runSequence('build-scripts-prod','build-styles-prod');
+});
+
+gulp.task('default', function() {
+  return runSequence('build', 'watch', 'server');
 });
