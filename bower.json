@@ -26,6 +26,7 @@
   "dependencies": {
     "modernizr": "~2.7.2",
     "prefix-free": "gh-pages",
-    "bootstrap": "~3.3.1"
+    "bootstrap": "~3.3.1",
+    "prismjs": "*"
   }
 }
