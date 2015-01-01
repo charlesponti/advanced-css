@@ -1,0 +1,18 @@
+.transform {
+    width: 100%;
+
+    .outerbox {
+        height: 400px;
+        width: 80%;
+        margin: 0 auto;
+        background-color: aliceblue;
+    }
+
+    .innerbox {
+        height: 50%;
+        width: 30%;
+        background-color: tomato;
+        transform: rotate(30deg);
+    }
+
+}

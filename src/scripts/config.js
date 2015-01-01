@@ -15,11 +15,14 @@ module.exports = function($locationProvider, $routeProvider) {
     .when('/selectors', {
       templateUrl: 'views/selectors.html'
     })
+    .when('/transform', {
+      templateUrl: 'views/transform.html'
+    })
+    .when('/transition', {
+      templateUrl: 'views/transition.html'
+    })
     .when('/keyframes', {
       templateUrl: 'views/keyframes.html'
-    })
-    .when('/animations', {
-      templateUrl: 'views/animations.html'
     })
     .otherwise({
       redirectTo: '/'
