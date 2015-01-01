@@ -1,0 +1,35 @@
+// This file defines the styles for the .flexbox component
+.flexbox {
+    @include flexbox();
+    -webkit-flex-flow: row wrap;
+    justify-content: center;
+    flex-direction: row;
+
+    .column {
+        padding: 5px;
+        width: 200px;
+        height: 150px;
+    }
+
+    .column:nth-child(1) {
+        background-color: blue;
+        order: 2;
+    }
+    .column:nth-child(2) {
+        background-color: green;
+        order: 3;
+    }
+    .column:nth-child(3) {
+        background-color: red;
+        order: 1;
+    }
+
+    @media screen and (max-width: 765px) {
+        & {
+            flex-direction: column;
+            .column {
+                width: 100%;
+            }
+        }
+    }
+}
