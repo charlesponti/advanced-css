@@ -1,0 +1,74 @@
+// Flexbox
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+// Flex
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex:  $values;
+    -webkit-flex:  $values;
+    -ms-flex:  $values;
+    flex:  $values;
+}
+
+// Order
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+
+// Box Sizing
+@mixin box-sizing($model) {
+    -webkit-box-sizing: $model;
+    -moz-box-sizing: $model;
+    box-sizing: $model;
+}
+
+// Border radius
+@mixin border-radius($radius...) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    border-radius: $radius;
+}
+
+// Box Shadow
+@mixin box-shadow($shadows...) {
+    -webkit-box-shadow: $shadows;
+    -moz-box-shadow: $shadows;
+    box-shadow: $shadows;
+}
+
+// Linear Gradient
+@mixin linear-gradient($direction : to bottom, $from-color : #FFF, $to-color : #F0F0F0) {
+    background-color: $to-color;
+    background-image: -webkit-linear-gradient($direction, $from-color, $to-color);
+    background-image:    -moz-linear-gradient($direction, $from-color, $to-color);
+    background-image:     -ms-linear-gradient($direction, $from-color, $to-color);
+    background-image:      -o-linear-gradient($direction, $from-color, $to-color);
+    background-image:         linear-gradient($direction, $from-color, $to-color);
+}
+
+// Transform
+@mixin transform($transform...) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    -ms-transform: $transform;
+    -o-transform: $transform;
+    transform: $transform;
+}
+
+// Transition
+@mixin transition($transition) {
+    -webkit-transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    transition: $transition;
+}
