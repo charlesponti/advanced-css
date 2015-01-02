@@ -4,7 +4,7 @@
   "description": "An AngularJS application for teaching advanced CSS",
   "main": "gulpfile.js",
   "scripts": {
-    "start": "gulp",
+    "dev": "gulp",
     "build": "gulp build",
     "prod": "gulp prod",
     "test": "karma start karma.conf.js",
