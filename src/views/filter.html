@@ -1,11 +1,12 @@
 <h1 class="text-center"> Filter </h1>
 
-<p class="text-center">
+<p>
     The CSS filter property provides for effects like blurring or color
     shifting on an element’s rendering before the element is displayed. Filters
     are commonly used to adjust the rendering of an image, a background, or a
     border.
-    <br>
+</p>
+<p>
     You are not limited to only using one filter and can combine filters together
     to get the desired look you are after.
 </p>
@@ -31,16 +32,20 @@
     <li class="list-group-item">
         <h3>blur()</h3>
         <p>Applies a Gaussian blur to the input image. The value of ‘radius’ defines the value of the standard deviation to the Gaussian function, or how many pixels on the screen blend into each other, so a larger value will create more blur. If no parameter is provided, then a value 0 is used. The parameter is specified as a CSS length, but does not accept percentage values.</p>
-        <pre><code>
-            filter: blur(5px);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: blur(5px);
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>brightness()</h3>
         <p>Applies a linear multiplier to input image, making it appear more or less bright. A value of 0% will create an image that is completely black. A value of 100% leaves the input unchanged. Other values are linear multipliers on the effect. Values of an amount over 100% are allowed, providing brighter results. If the ‘amount’ parameter is missing, a value of 1 is used.</p>
-        <pre><code>
-            filter: brigthness(0.5)
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: brigthness(0.5)
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>contrast()</h3>
@@ -50,9 +55,11 @@
             Values of amount over 100% are allowed, providing results with less contrast.
             If the ‘amount’ parameter is missing, a value of 1 is used.
         </p>
-        <pre><code>
-            filter: contrast(200%);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: contrast(200%);
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>drop-shadow()</h3>
@@ -61,10 +68,12 @@
             effectively a blurred, offset version of the input image's alpha
             mask drawn in a particular color, composited below the image.
         </p>
-        <pre><code>
-            // drop-shadow(x, y, blur, spread, color);
-            filter: drop-shadow(15px 15px 10px black);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                // drop-shadow(x, y, blur, spread, color);
+                filter: drop-shadow(15px 15px 10px black);
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>grayscale()</h3>
@@ -75,9 +84,11 @@
             0% and 100% are linear multipliers on the effect. If the ‘amount’
             parameter is missing, a value of 0 is used.
         </p>
-        <pre><code>
-            filter: grayscale(100%);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: grayscale(100%);
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>invert()</h3>
@@ -88,9 +99,11 @@
             0% and 100% are linear multipliers on the effect. If the ‘amount’
             parameter is missing, a value of 0 is used.
         </p>
-        <pre><code>
-            filter: invert(100%);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: invert(100%);
+            </code>
+        </pre>
     </li>
     <li class="list-group-item">
         <h3>opacity()</h3>
@@ -105,8 +118,10 @@
             difference is that with filters, some browsers provide hardware
             acceleration for better performance.
         </p>
-        <pre><code>
-            filter: opacity(50%);
-        </code></pre>
+        <pre>
+            <code class="language-css">
+                filter: opacity(50%);
+            </code>
+        </pre>
     </li>
 </ul>
