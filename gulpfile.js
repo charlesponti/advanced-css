@@ -1,25 +1,36 @@
 'use strict';
 
-var gulp = require('gulp');
-var karma = require('karma');
-var stylish = require('jshint-stylish');
-var minifyHTML = require('gulp-minify-html');
+// Development versions are default
+global.isProd = false;
+
 var runSequence = require('run-sequence');
 
-// Gulp Plugins
-var gutil = require('gulp-util');
-var watch = require('gulp-watch');
+// Gulp & Plugins
+var gulp = require('gulp');
+var gulpif = require('gulp-if');
 var concat = require('gulp-concat');
-var jshint = require('gulp-jshint');
-var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
-var sass = require('gulp-ruby-sass');
+var streamify = require('gulp-streamify');
+var minifyHTML = require('gulp-minify-html');
+var templateCache = require('gulp-angular-templatecache');
+
+// Styles
+var sass = require('gulp-sass');
 var minifycss = require('gulp-minify-css');
 
-// Browserify Dependencies
+// Scripts
+var jshint = require('gulp-jshint');
 var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
+var stylish = require('jshint-stylish');
 var source = require('vinyl-source-stream');
+var ngannotate = require('browserify-ngannotate');
+
+// Testing
+var karma = require('karma');
+var protractor = require('gulp-protractor').protractor;
+var webdriver = require('gulp-protractor').webdriver;
+var webdriverUpdate = require('gulp-protractor').webdriver_update;
 
 // Dev Server
 var port = 4000;
@@ -27,89 +38,74 @@ var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var historyApiFallback = require('connect-history-api-fallback');
 
+gulp.task('webdriver-update', webdriverUpdate);
+gulp.task('webdriver', webdriver);
+
 var files = {
   scripts: {
     main: './src/scripts/main.js',
-    source: './src/scripts/**/*.js',
-    build: './build/scripts'
+    source: 'src/scripts/**/*.js',
+    build: 'build/scripts'
   },
   styles: {
     main: './src/styles/main.scss',
-    source: './src/styles/**/*.scss',
-    build: './build/styles'
+    source: 'src/styles/**/*.scss',
+    build: 'build/styles'
   },
   html: {
-    source: './src/**/*.html',
-    build: './build'
+    source: 'src/**/*.html',
+    build: 'build/'
   }
 };
 
 gulp.task('jshint', function() {
   return gulp.src(files.scripts.source)
-  .pipe(jshint())
-  .pipe(jshint.reporter(stylish));
+    .pipe(jshint())
+    .pipe(jshint.reporter(stylish));
 });
 
-gulp.task('build-scripts', ['jshint'], function() {
+gulp.task('scripts', ['jshint'], function() {
   return browserify({
-    entries: [files.scripts.main],
-    insertGlobals: true,
-    debug: true,
-    cache: {},
-    packageCache: {},
-    shim: {
-      angular: {
-        path: '/node_modules/angular/angular.js',
-        exports: 'angular'
-      }
-    }
-  })
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(gulp.dest(files.scripts.build))
-  .pipe(reload({ stream: true }));
+      entries: [files.scripts.main],
+      debug: global.isProd ? true : false,
+      insertGlobals: true,
+      transform: ngannotate
+    })
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(files.scripts.build))
+    .pipe(buffer())
+    .pipe(gulpif(global.isProd, streamify(uglify())))
+    .pipe(gulp.dest(files.scripts.build));
 });
 
-gulp.task('build-scripts-prod', ['jshint'], function() {
-  return browserify({
-    entries: [files.scripts.main],
-    insertGlobals: true,
-    debug: false,
-    cache: {},
-    packageCache: {}
-  })
-  .bundle()
-  .pipe(source('bundle.js'))
-  .pipe(buffer())
-  .pipe(uglify())
-  .pipe(rename({suffix: '.min'}))
-  .pipe(gulp.dest(files.scripts.build));
-});
-
-gulp.task('build-styles', function() {
+gulp.task('styles', function() {
   return gulp.src(files.styles.main)
-  .pipe(sass())
-  .pipe(gulp.dest(files.styles.build))
-  .pipe(reload({ stream: true }));
+    .pipe(sass({
+      sourceComments: global.isProd ? 'none' : 'map',
+      sourceMap: 'sass',
+      outputStyle: global.isProd ? 'compressed' : 'nested'
+    }))
+    .pipe(gulp.dest(files.styles.build))
+    .pipe(gulpif(global.isProd, minifycss()))
+    .pipe(gulp.dest(files.styles.build));
 });
 
-gulp.task('build-styles-prod', function() {
-  return gulp.src(files.styles.main)
-  .pipe(sass())
-  .pipe(rename({suffix: '.min'}))
-  .pipe(minifycss())
-  .pipe(gulp.dest(files.styles.build));
-});
+gulp.task('views', function() {
+  gulp.src('src/index.html')
+      .pipe(minifyHTML({
+        comments: global.isProd ? false : true,
+        spare: global.isProd ? false : true,
+        empty: true
+      }))
+      .pipe(gulp.dest(files.html.build))
+      .pipe(reload({ stream: true }));
 
-gulp.task('build-html', function() {
-  return gulp.src(files.html.source)
-  .pipe(minifyHTML({
-    comments: true,
-    spare: true,
-    empty: true
-  }))
-  .pipe(gulp.dest(files.html.build))
-  .pipe(reload({ stream: true }));
+  return gulp.src('./src/views/**/*.html')
+    .pipe(templateCache({
+      standalone: true
+    }))
+    .pipe(gulp.dest('./src/scripts'));
 });
 
 gulp.task('test', function(done) {
@@ -118,12 +114,29 @@ gulp.task('test', function(done) {
   }, done);
 });
 
+gulp.task('protractor', ['webdriver-update', 'webdriver' ], function() {
+  return gulp.src('test/e2e/**/*.js')
+    .pipe(protractor({
+        configFile: './protractor.conf.js',
+    }))
+    .on('error', function(err) {
+      // Make sure failed tests cause gulp to exit non-zero
+      throw err;
+    });
+});
+
+gulp.task('watch', function() {
+  gulp.watch(files.html.source, ['views']);
+  gulp.watch(files.scripts.source, ['scripts']);
+  return gulp.watch(files.styles.source, ['styles']);
+});
+
 gulp.task('server', function() {
   return browserSync({
     files: [
-    './build/scripts/**/*.js',
-    './build/styles/**/*.css',
-    './build/**/*.html'
+      './build/scripts/**/*.js',
+      './build/styles/**/*.css',
+      './build/**/*.html'
     ],
     server: {
       baseDir: './build',
@@ -133,26 +146,13 @@ gulp.task('server', function() {
   });
 });
 
-gulp.task('watch', function() {
-  watch({ glob: files.styles.source }, function() {
-    return gulp.start('build-styles');
-  });
-
-  watch({ glob: files.html.source }, function() {
-    return gulp.start('build-html');
-  });
-
-  watch({ glob: files.scripts.source }, function() {
-    return gulp.start('build-scripts');
-  });
+gulp.task('prod', function() {
+  global.isProd = true;
+  return runSequence('views', 'styles', 'scripts');
 });
 
 gulp.task('build', function() {
-  return runSequence('build-styles', 'build-scripts', 'build-html');
-});
-
-gulp.task('prod-build', function() {
-  return runSequence('build-scripts-prod','build-styles-prod');
+  return runSequence('views', 'styles', 'scripts');
 });
 
 gulp.task('default', function() {
