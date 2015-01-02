@@ -8,11 +8,22 @@ var angular = require('angular');
 // Require angular dependencies
 require('angular-route');
 
-// Define main application
-angular.module('advancedCSS',[
-    'ngRoute'
-  ])
-  .config(require('./config'));
+// Require templates
+require('./templates');
 
-// Bootstrap application
-angular.bootstrap(document, ['advancedCSS']);
+// Load application when document is ready
+angular.element(document).ready(function() {
+  var requires = [
+    'ngRoute',
+    'templates',
+  ];
+
+  // mount on window for testing
+  window.app = angular.module('app', requires);
+
+  // Configure application
+  angular.module('app').config(require('./config'));
+
+  // Bootstrap application
+  angular.bootstrap(document, ['app']);
+});
