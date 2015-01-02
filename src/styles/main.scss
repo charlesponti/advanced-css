@@ -1,3 +1,4 @@
+@import "variables";
 @import "colors";
 @import "mixins";
 @import "base";
@@ -8,13 +9,4 @@
 @import "components/transition";
 @import "components/transform";
 @import "components/keyframes";
-
-// Breakpoints
-@import "breakpoints/desktop-laptop";
-@import "breakpoints/large-screen";
-@import "breakpoints/ipad-both";
-@import "breakpoints/ipad-portrait";
-@import "breakpoints/ipad-landscape";
-@import "breakpoints/smartphone-both";
-@import "breakpoints/smartphone-portrait";
-@import "breakpoints/smartphone-landscape";
+@import "components/filter";
