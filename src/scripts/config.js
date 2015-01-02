@@ -24,6 +24,12 @@ module.exports = function($locationProvider, $routeProvider) {
     .when('/keyframes', {
       templateUrl: 'views/keyframes.html'
     })
+    .when('/filter', {
+      templateUrl: 'views/filter.html'
+    })
+    .when('/methodology', {
+      templateUrl: 'views/methodology.html'
+    })
     .otherwise({
       redirectTo: '/'
     });
