@@ -7,28 +7,31 @@ module.exports = function($locationProvider, $routeProvider) {
 
   $routeProvider
     .when('/', {
-      templateUrl: 'views/home.html'
+      templateUrl: 'home.html'
     })
     .when('/flexbox', {
-      templateUrl: 'views/flexbox.html'
+      templateUrl: 'flexbox.html'
     })
     .when('/selectors', {
-      templateUrl: 'views/selectors.html'
+      templateUrl: 'selectors.html'
     })
     .when('/transform', {
-      templateUrl: 'views/transform.html'
+      templateUrl: 'transform.html'
     })
     .when('/transition', {
-      templateUrl: 'views/transition.html'
+      templateUrl: 'transition.html'
     })
     .when('/keyframes', {
-      templateUrl: 'views/keyframes.html'
+      templateUrl: 'keyframes.html'
     })
     .when('/filter', {
-      templateUrl: 'views/filter.html'
+      templateUrl: 'filter.html'
     })
     .when('/methodology', {
-      templateUrl: 'views/methodology.html'
+      templateUrl: 'methodology.html'
+    })
+    .when('/specificity', {
+      templateUrl: 'specificity.html'
     })
     .otherwise({
       redirectTo: '/'
