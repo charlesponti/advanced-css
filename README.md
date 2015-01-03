@@ -1,3 +1,3 @@
 # Advanced CSS
 
-A tutorial for learning advanced css features, techniques, and methodologies.
+A tutorial for learning advanced CSS features, techniques, and methodologies.
