@@ -67,13 +67,15 @@ gulp.task('jshint', function() {
 gulp.task('scripts', ['jshint'], function() {
   return browserify({
       entries: [files.scripts.main],
-      debug: global.isProd ? true : false,
+      debug: global.isProd ? false : true,
+      fullPaths: true,
       insertGlobals: true,
       transform: ngannotate
     })
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(files.scripts.build))
+    .pipe(reload({ stream: true }))
     .pipe(buffer())
     .pipe(gulpif(global.isProd, streamify(uglify())))
     .pipe(gulp.dest(files.scripts.build));
@@ -87,6 +89,7 @@ gulp.task('styles', function() {
       outputStyle: global.isProd ? 'compressed' : 'nested'
     }))
     .pipe(gulp.dest(files.styles.build))
+    .pipe(reload({ stream: true }))
     .pipe(gulpif(global.isProd, minifycss()))
     .pipe(gulp.dest(files.styles.build));
 });
@@ -125,12 +128,6 @@ gulp.task('protractor', ['webdriver-update', 'webdriver' ], function() {
     });
 });
 
-gulp.task('watch', function() {
-  gulp.watch(files.html.source, ['views']);
-  gulp.watch(files.scripts.source, ['scripts']);
-  return gulp.watch(files.styles.source, ['styles']);
-});
-
 gulp.task('server', function() {
   return browserSync({
     files: [
@@ -144,6 +141,12 @@ gulp.task('server', function() {
     },
     port: port
   });
+});
+
+gulp.task('watch', function() {
+  gulp.watch(files.html.source, ['views']);
+  gulp.watch(files.scripts.source, ['scripts']);
+  return gulp.watch(files.styles.source, ['styles']);
 });
 
 gulp.task('prod', function() {

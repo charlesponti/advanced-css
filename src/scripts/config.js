@@ -33,6 +33,9 @@ module.exports = function($locationProvider, $routeProvider) {
     .when('/specificity', {
       templateUrl: 'specificity.html'
     })
+    .when('/media-queries', {
+      templateUrl: 'media-queries.html'
+    })
     .otherwise({
       redirectTo: '/'
     });
