@@ -1,12 +1,13 @@
-@import "variables";
-@import "colors";
-@import "mixins";
-@import "base";
+@import "variables",
+        "colors",
+        "mixins",
+        "base";
 
 // Components
-@import "components/flexbox";
-@import "components/selectors";
-@import "components/transition";
-@import "components/transform";
-@import "components/keyframes";
-@import "components/filter";
+@import "components/nav",
+        "components/flexbox",
+        "components/selectors",
+        "components/transition",
+        "components/transform",
+        "components/keyframes",
+        "components/filter";

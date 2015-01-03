@@ -24,6 +24,9 @@ angular.element(document).ready(function() {
   // Configure application
   angular.module('app').config(require('./config'));
 
+  angular.module('app')
+    .directive('prism', require('./directives/prism'));
+
   // Bootstrap application
   angular.bootstrap(document, ['app']);
 });
