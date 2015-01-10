@@ -4,5 +4,6 @@ build/scripts/**
 build/styles/**
 build/vendor/**
 build/**/*.html
+templates.js
 node_modules
 *.log
