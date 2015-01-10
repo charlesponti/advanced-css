@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('advanced-css.transform', [])
+angular.module('advancedCSS.transform', [])
   .directive('transformer', require('./directives/transformer'))
-  .controller('TransformCtrl', TransformCtrl);
+  .controller('TransformController', TransformController);
 
 /**
  * @ngInject
  */
-function TransformCtrl($scope) {
+function TransformController($scope) {
 
 }
