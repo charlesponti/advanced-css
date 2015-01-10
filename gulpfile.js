@@ -3,16 +3,21 @@
 // Development versions are default
 global.isProd = false;
 
+// Current working directory
+var cwd = process.cwd();
+
 var runSequence = require('run-sequence');
 
 // Gulp & Plugins
 var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var concat = require('gulp-concat');
-var uglify = require('gulp-uglify');
-var streamify = require('gulp-streamify');
-var minifyHTML = require('gulp-minify-html');
-var templateCache = require('gulp-angular-templatecache');
+var $ = require('gulp-load-plugins')();
+
+var gulpif = $.if;
+var concat = $.concat;
+var uglify = $.uglify;
+var streamify = $.streamify;
+var minifyHTML = $.minifyHtml;
+var templateCache = $.angularTemplatecache;
 
 // Styles
 var sass = require('gulp-sass');
@@ -20,7 +25,6 @@ var minifycss = require('gulp-minify-css');
 
 // Scripts
 var jshint = require('gulp-jshint');
-var buffer = require('vinyl-buffer');
 var browserify = require('browserify');
 var stylish = require('jshint-stylish');
 var source = require('vinyl-source-stream');
@@ -33,10 +37,7 @@ var webdriver = require('gulp-protractor').webdriver;
 var webdriverUpdate = require('gulp-protractor').webdriver_update;
 
 // Dev Server
-var port = 4000;
-var browserSync = require('browser-sync');
-var reload = browserSync.reload;
-var historyApiFallback = require('connect-history-api-fallback');
+var superstatic = require('superstatic');
 
 gulp.task('webdriver-update', webdriverUpdate);
 gulp.task('webdriver', webdriver);
@@ -60,49 +61,42 @@ var files = {
 
 gulp.task('jshint', function() {
   return gulp.src(files.scripts.source)
-    .pipe(jshint())
-    .pipe(jshint.reporter(stylish));
+  .pipe(jshint())
+  .pipe(jshint.reporter(stylish));
 });
 
 gulp.task('scripts', ['jshint'], function() {
   return browserify({
-      entries: [files.scripts.main],
-      debug: global.isProd ? false : true,
-      fullPaths: true,
-      insertGlobals: true,
-      transform: ngannotate
-    })
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(files.scripts.build))
-    .pipe(reload({ stream: true }))
-    .pipe(buffer())
-    .pipe(gulpif(global.isProd, streamify(uglify())))
-    .pipe(gulp.dest(files.scripts.build));
+    entries: [files.scripts.main],
+    debug: global.isProd ? false : true,
+    insertGlobals: true,
+    transform: ngannotate
+  })
+  .bundle()
+  .pipe(source('bundle.js'))
+  .pipe(gulpif(global.isProd, streamify(uglify())))
+  .pipe(gulp.dest(files.scripts.build));
 });
 
 gulp.task('styles', function() {
   return gulp.src(files.styles.main)
-    .pipe(sass({
-      sourceComments: global.isProd ? 'none' : 'map',
-      sourceMap: 'sass',
-      outputStyle: global.isProd ? 'compressed' : 'nested'
-    }))
-    .pipe(gulp.dest(files.styles.build))
-    .pipe(reload({ stream: true }))
-    .pipe(gulpif(global.isProd, minifycss()))
-    .pipe(gulp.dest(files.styles.build));
+  .pipe(sass({
+    sourceComments: global.isProd ? 'none' : 'map',
+    sourceMap: 'sass',
+    outputStyle: global.isProd ? 'compressed' : 'nested'
+  }))
+  .pipe(gulpif(global.isProd, minifycss()))
+  .pipe(gulp.dest(files.styles.build));
 });
 
 gulp.task('views', function() {
   gulp.src('src/index.html')
-      .pipe(minifyHTML({
-        comments: global.isProd ? false : true,
-        spare: global.isProd ? false : true,
-        empty: true
-      }))
-      .pipe(gulp.dest(files.html.build))
-      .pipe(reload({ stream: true }));
+  .pipe(minifyHTML({
+    comments: global.isProd ? false : true,
+    spare: global.isProd ? false : true,
+    empty: true
+  }))
+  .pipe(gulp.dest(files.html.build));
 
   return gulp.src('./src/views/**/*.html')
     .pipe(templateCache({
@@ -113,33 +107,18 @@ gulp.task('views', function() {
 
 gulp.task('test', function(done) {
   return karma.server.start({
-    configFile: __dirname + '/karma.conf.js'
+    configFile: cwd + '/karma.conf.js'
   }, done);
 });
 
 gulp.task('protractor', ['webdriver-update', 'webdriver' ], function() {
   return gulp.src('test/e2e/**/*.js')
-    .pipe(protractor({
-        configFile: './protractor.conf.js',
-    }))
-    .on('error', function(err) {
-      // Make sure failed tests cause gulp to exit non-zero
-      throw err;
-    });
-});
-
-gulp.task('server', function() {
-  return browserSync({
-    files: [
-      './build/scripts/**/*.js',
-      './build/styles/**/*.css',
-      './build/**/*.html'
-    ],
-    server: {
-      baseDir: './build',
-      middleware: [historyApiFallback]
-    },
-    port: port
+  .pipe(protractor({
+    configFile: './test/protractor.conf.js',
+  }))
+  .on('error', function(err) {
+    // Make sure failed tests cause gulp to exit non-zero
+    throw err;
   });
 });
 
@@ -147,6 +126,25 @@ gulp.task('watch', function() {
   gulp.watch(files.html.source, ['views']);
   gulp.watch(files.scripts.source, ['scripts']);
   return gulp.watch(files.styles.source, ['styles']);
+});
+
+gulp.task('server', function(next) {
+  var server = superstatic({
+    logger: {
+      info: function(msg) {
+        console.log('Info:', msg);
+      },
+      error: function(msg) {
+        console.error('Error:', msg);
+      }
+    },
+    port: 3000,
+    config: 'divshot.json'
+  });
+  server.listen(function() {
+    console.log('Server running on port ' + server.port);
+  });
+  return next();
 });
 
 gulp.task('prod', function() {
