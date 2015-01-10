@@ -100,7 +100,8 @@ gulp.task('views', function() {
 
   return gulp.src('./src/views/**/*.html')
     .pipe(templateCache({
-      standalone: true
+      standalone: true,
+      module: 'advancedCSS.templates'
     }))
     .pipe(gulp.dest('./src/scripts'));
 });
