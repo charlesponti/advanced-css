@@ -16,7 +16,8 @@ module.exports = function($locationProvider, $routeProvider) {
       templateUrl: 'selectors.html'
     })
     .when('/transform', {
-      templateUrl: 'transform.html'
+      templateUrl: 'transform.html',
+      controller: 'TransformCtrl as transform'
     })
     .when('/transition', {
       templateUrl: 'transition.html'
