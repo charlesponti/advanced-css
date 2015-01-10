@@ -7,10 +7,8 @@
 
         <pre>
         <code class="language-css">
-            ul.nth-odd {
-                li:nth-child(odd) {
-                    background-color: tomato;
-                }
+            li:nth-child(odd) {
+                background-color: tomato;
             }
         </code>
         </pre>
@@ -28,10 +26,8 @@
 
         <pre>
         <code class="language-css">
-            ul.nth-even {
-                li:nth-child(even) {
-                    background-color: tomato;
-                }
+            li:nth-child(even) {
+                background-color: tomato;
             }
         </code>
         </pre>
@@ -42,6 +38,92 @@
             <li class="list-group-item"> Third </li>
             <li class="list-group-item"> Fourth </li>
         </ul>
+    </section>
+
+    <section>
+        <h2> :first-child </h2>
+
+        <pre>
+            <code class="language-css">
+                li:first-child {
+                    background-color: tomato;
+                }
+            </code>
+        </pre>
+
+        <ul class="first-child list-group">
+            <li class="list-group-item"> First </li>
+            <li class="list-group-item"> Second </li>
+            <li class="list-group-item"> Third </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2> :last-child </h2>
+
+        <pre>
+            <code class="language-css">
+                li:last-child {
+                    background-color: tomato;
+                }
+            </code>
+        </pre>
+
+        <ul class="last-child list-group">
+            <li class="list-group-item"> First </li>
+            <li class="list-group-item"> Second </li>
+            <li class="list-group-item"> Third </li>
+        </ul>
+    </section>
+
+
+    <section>
+        <h2> :nth-child </h2>
+
+        <pre>
+            <code class="language-css">
+                li:nth-child(2) {
+                    background-color: tomato;
+                }
+            </code>
+        </pre>
+
+        <ul class="nth-child list-group">
+            <li class="list-group-item"> First </li>
+            <li class="list-group-item"> Second </li>
+            <li class="list-group-item"> Third </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2> :first-letter </h2>
+
+        <pre>
+            <code class="language-css">
+                p:first-letter {
+                    font-size: 72px;
+                    float: left;
+                    padding: 10px;
+                    height: 64px;
+                    font-family: 'HominisNormal';
+                    background-color: #7F7664;
+                    margin-right: 10px;
+                    color: white;
+                    border-radius: 5px;
+                    line-height: 70px; 
+                }
+            </code>
+        </pre>
+
+        <p class="first-letter">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
     </section>
 
 </section>
