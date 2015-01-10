@@ -40,6 +40,8 @@ html, body {
   box-sizing: border-box;
 }
 
-code {
-    background-color: #f5f2f0;
+
+pre {
+    // Remove border from <pre>
+    border: 0px;;
 }
