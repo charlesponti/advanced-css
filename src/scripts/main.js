@@ -11,11 +11,15 @@ require('angular-route');
 // Require templates
 require('./templates');
 
+// Require Transform application
+require('./transform');
+
 // Load application when document is ready
 angular.element(document).ready(function() {
   var requires = [
     'ngRoute',
     'templates',
+    'advanced-css.transform'
   ];
 
   // mount on window for testing
@@ -25,6 +29,8 @@ angular.element(document).ready(function() {
   angular.module('app').config(require('./config'));
 
   angular.module('app')
+    .directive('listGroup', require('./directives/list-group'))
+    .directive('listItem', require('./directives/list-item'))
     .directive('prism', require('./directives/prism'));
 
   // Bootstrap application
