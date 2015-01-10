@@ -11,4 +11,38 @@
             background-color: tomato;
         }
     }
+
+    ul.first-child {
+        li:first-child {
+            background-color: tomato;
+        }
+    }
+
+    ul.last-child {
+        li:last-child {
+            background-color: tomato;
+        }
+    }
+
+    ul.nth-child {
+        li:nth-child(2) {
+            background-color: tomato;
+        }
+    }
+
+    p.first-letter {
+        &:first-letter {
+            font-size: 72px;
+            float: left;
+            padding: 10px;
+            height: 64px;
+            font-family: 'HominisNormal';
+            background-color: #7F7664;
+            margin-right: 10px;
+            color: white;
+            border-radius: 5px;
+            line-height: 70px; 
+        }
+    }
+
 }
