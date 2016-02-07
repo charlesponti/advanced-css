@@ -1,11 +1,14 @@
+import transformer from './transformer';
+import template from './transform.html';
+import './transform.less';
 
-angular.module('advancedCSS.transform', [])
-  .directive('transformer', require('./directives/transformer'))
-  .controller('TransformController', TransformController);
-
-/**
- * @ngInject
- */
-function TransformController($scope) {
-
-}
+export default (
+    angular.module('css.transform', [])
+        .directive('transformer', transformer)
+        .config(['$stateProvider', function($stateProvider) {
+            $stateProvider.state('transform', {
+                url: '/transform',
+                template
+            });
+        }])
+);

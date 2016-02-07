@@ -7,32 +7,23 @@
         rotated, scaled, and skewed according to the values set.
     </p>
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-
-    <x-transformer></x-transformer>
+    <transformer></transformer>
 
     <br/>
 
     <prism language='scss'>
-        .transform {
-            width: 100%;
+        .outerbox {
+            height: 400px;
+            width: 80%;
+            margin: 0 auto;
+            background-color: aliceblue;
+        }
 
-            .outerbox {
-                height: 400px;
-                width: 80%;
-                margin: 0 auto;
-                background-color: aliceblue;
-            }
-
-            .innerbox {
-                height: 50%;
-                width: 30%;
-                background-color: tomato;
-                transform: rotate(30deg);
-            }
+        .innerbox {
+            height: 50%;
+            width: 30%;
+            background-color: tomato;
+            transform: rotate(30deg);
         }
     </prism>
 
