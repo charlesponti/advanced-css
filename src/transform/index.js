@@ -1,4 +1,3 @@
-'use strict';
 
 angular.module('advancedCSS.transform', [])
   .directive('transformer', require('./directives/transformer'))

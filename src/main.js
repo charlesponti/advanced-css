@@ -1,15 +1,5 @@
-'use strict';
-
-window.$ =
-window.jQuery = require('jquery');
-
-var angular = require('angular');
-
-// Require angular dependencies
-require('angular-route');
-
-// Require templates
-require('./templates');
+import angular from 'angular';
+import uirouter from 'angular-ui-router';
 
 // Require Transform module
 require('./transform');
