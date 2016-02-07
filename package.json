@@ -62,7 +62,7 @@
     "test:live": "NODE_ENV=test node_modules/.bin/karma start karma.conf.js --watch",
     "build": "NODE_ENV=production node_modules/.bin/webpack --config webpack.config.js --bail -p",
     "start": "NODE_ENV=production node_modules/.bin/babel-node --presets es2015 server",
-    "dev": "node_modules/.bin/babel-node server",
+    "dev": "node_modules/.bin/babel-node --presets es2015 server",
     "postinstall": "npm run build"
   }
 }
