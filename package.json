@@ -17,7 +17,8 @@
     "moment": "^2.11.1",
     "prismjs": "^1.4.1",
     "semantic-ui-css": "^2.1.8",
-    "sizzle": "^2.3.0"
+    "sizzle": "^2.3.0",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
@@ -64,6 +65,9 @@
     "build": "NODE_ENV=production node_modules/.bin/webpack --config webpack.config.js --bail -p",
     "start": "NODE_ENV=production node_modules/.bin/babel-node --presets es2015 server",
     "dev": "node_modules/.bin/babel-node --presets es2015 server",
-    "postinstall": "npm run build"
-  }
+    "postinstall": "npm run build",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
